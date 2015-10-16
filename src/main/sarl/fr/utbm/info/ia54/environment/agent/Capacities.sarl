@@ -235,11 +235,11 @@ skill DefaultMazeManagerSkill implements MazeManager {
 	}
 	
 	def getMazeHeight : int {
-		this.width
+		this.height
 	}
 	
 	def getMazeWidth : int {
-		this.height
+		this.width
 	}
 	
 	def getPacmanObjects : List<PacmanObject> {
