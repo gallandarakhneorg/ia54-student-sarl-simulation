@@ -125,10 +125,6 @@ skill DefaultMazeManagerSkill implements MazeManager {
 	
 	var maze : Maze
 	
-	var defaultAddressInMazeSpace : Address
-	
-	var mazeSpace : MazeSpace
-	
 	new (width : int, height : int) {
 		this.width = width
 		this.height = height
