@@ -80,9 +80,6 @@ capacity MazeManager {
 
 	/** Create a pacman body. */
 	def createPacman() : PacmanBody
-	
-	/** Replies the underground maze space. */
-	def getMazeSpace : MazeSpace
 
 }
 
@@ -269,10 +266,6 @@ skill DefaultMazeManagerSkill implements MazeManager {
 	
 	def createPacman : PacmanBody {
 		this.maze.createBody(typeof(PacmanBody), null, 0);
-	}
-	
-	def getMazeSpace : MazeSpace {
-		this.mazeSpace
 	}
 	
 }
