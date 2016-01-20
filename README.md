@@ -16,8 +16,8 @@ License: Apache License 2
 
 ## Installation
 
-* Download the [version 2.1.0.0](http://www.janusproject.io/#download) (or higher) of the Janus platform.
-* Download the [Eclipse product 1.0.0](http://www.sarl.io/download/) for the SARL agent programming language.
+* Download the [version 2.0.3.0](http://www.janusproject.io/#download) (or higher) of the Janus platform.
+* Download the [Eclipse product 0.3.0](http://www.sarl.io/download/) for the SARL agent programming language.
 * Launch the SARL Eclipse product.
 * Create a SARL project.
 * In the buildpath of the project: remove the "SARL libraries".
