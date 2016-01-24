@@ -5,8 +5,8 @@ In this section, you will find the tasks to do for preparing your development en
 \subsection{Installation of the Eclipse Tools}
 
 \begin{emphbox}
-Recommended version of SARL : 1.0.0-SNAPSHOT (unstable) \\
-Recommended version of Janus : 2.1.0.0-SNAPSHOT (development version)
+Recommended version of SARL : 0.3.1-SNAPSHOT (stable) \\
+Recommended version of Janus : 2.0.3.1-SNAPSHOT (release/stable version)
 \end{emphbox}
 
 \begin{enumerate}
@@ -15,15 +15,29 @@ Recommended version of Janus : 2.1.0.0-SNAPSHOT (development version)
 \item Download the \Emph{development version} of the Janus agent execution platform : \url{http://www.janusproject.io}
 \item Do not uncompress the Jar file of the Janus platform.
 \item Launch the downloaded Eclipse product.
+\ifJANUSINCLASSPATH\else
+\item You must ensure that the Eclipse environment contains a SARL run-time environment (SRE) by: \\
+	\parbox{\linewidth}{\begin{enumerate}[a)]
+	\item Open the Preferences dialog box, with the menu: \\
+		\texttt{> Window > Preferences}
+	\item Open the SARL section related to the SRE in the left side of the dialog box: \\
+		\texttt{> SARL > Installed SREs}
+	\item Check if a SRE is installed.
+	\item If yes, close the Preferences dialog box.
+	\item if no, add an SRE by clicking on "Add", and select the file of the Janus platform that you have download at the beginning of this section.
+	\end{enumerate}}
+\fi
 \item Open the wizard for creating a SARL project, with the menu: \\
 	\texttt{> File > New > Project > SARL > Project}
 \item Enter the name of the project.
+\ifJANUSINCLASSPATH
 \item Click on the tab with the name \code{Libraries}.
 \item In the list of the libraries, remove the \code{SARL Libraries}.
 \item In the list of the libraries, add the download file of the Janus platform as an external Jar file.
+\fi
 \item Click on "Finish", the SARL project should be created.
 \item You must ensure that the configuration of your SARL project is correct (may be still a bug in the SARL environment):
-	\begin{enumerate}[a]
+	\begin{enumerate}[a)]
 	\item Open the dialog of the properties of the SARL project by clicking on: \\
 		\texttt{Right click on project > Properties > SARL > Compiler > Output Folder}
 	\item Check if the field ``Directory'' is set to a source folder that is existing in your SARL project. If not change the property with): \\
@@ -31,7 +45,9 @@ Recommended version of Janus : 2.1.0.0-SNAPSHOT (development version)
 	\end{enumerate}
 \end{enumerate}
 
-You Eclipse is now ready for the lab work session. You should now install the code skeleton provided by the teachers.
+You Eclipse is now ready for the lab work session.
+\ifCODESKELETON
+You should now install the code skeleton provided by the teachers.
 
 \subsection{Installation of the Code Skeleton}
 
@@ -52,4 +68,15 @@ The steps to follow for installing the code skeleton are:
 Figure \figref{eclipse_project_structure} on the page \figpageref{eclipse_project_structure} gives an example of the structure of the SARL project that you should obtain.
 
 \mfigure[p]{width=.33\linewidth}{eclipse_project_structure}{Example of the structure of a SARL project}{eclipse_project_structure}
+\fi
+
+\subsection{SARL Documentation}
+
+The documentation for the SARL syntax, and the provided elements is available at: \url{http://www.sarl.io/docs/suite/io/sarl/docs/SARLDocumentationSuite.html}
+
+\subsection{Bug Report and Questions}
+
+In case you have discovered an issue in the SARL tools, you could submit it to the SARL development team via the Github interface: \url{https://github.com/sarl/sarl}
+
+In case you cannot discuss with your teacher, you could submit your questions to the SARL development team via the Github interface: \url{https://github.com/sarl/sarl}
 

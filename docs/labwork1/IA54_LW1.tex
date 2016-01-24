@@ -1,0 +1,172 @@
+%----------------------------------------
+% IT IS RECOMMENDED TO USE AUTOLATEX FOR
+% COMPILING THIS DOCUMENT.
+% http://www.arakhne.org/autolatex
+%----------------------------------------
+
+\documentclass[article,english,nodocumentinfo]{multiagentfrreport}
+
+% The TeX code is entering with UTF8
+% character encoding (Linux and MacOS standards)
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{../common/sarl-colorized-listing}
+
+\graphicspath{{imgs/auto/},{imgs/},{../common/}}
+
+\declaredocument{Introduction to SARL}{Lab Works \#1}{UTBM-INFO-IA54-LW1}
+
+\addauthorvalidator*[St\'ephane Galland]{St{\'e}phane}{Galland}{Teacher}
+
+\updateversion{1.0}{\makedate{20}{01}{2016}}{First release on Github}{\upmpublic}
+
+\Set[french]{institution}{Laboratoire Syst\`emes et Transport}
+\Set[english]{institution}{Laboratoire Syst\`emes et Transport}
+
+\Set{mafr_contact_name}{\phdname*{St\'ephane}{Galland}}
+\Set{mafr_contact_email}{stephane.galland@utbm.fr}
+\Set[french]{mafr_contact_phone}{03~84~58~34~18}
+\Set[english]{mafr_contact_phone}{+33 384~583~418}
+
+\newif\ifCODESKELETON
+\CODESKELETONfalse
+
+\newif\ifJANUSINCLASSPATH
+\JANUSINCLASSPATHfalse
+
+\begin{document}
+
+\section{Goal of this Lab Work Session}
+
+The goal of this lab work session is to introduce the basics concepts of agent-oriented programming with SARL.
+
+You shall learn: 
+\begin{itemize}
+\item How to write the agent.
+\item How to call an agent capacity.
+\item How to spawn an agent from an agent.
+\item How to define new capacities and skills.
+\item How to exchange information between agents.
+\end{itemize}
+
+\input{../common/install}
+
+\section{Work to be Done during the Lab Work Session}
+
+The following sections describe the work to be done during this lab work session.
+
+\subsection{First Agent}
+
+First, you should write an agent that is able to display ``Hello World'' on the output console.
+
+You should:
+\begin{enumerate}[a)]
+\item create the agent type with the name \code{Agent1} (with the wizard, or by hand).
+\item create the event handler that is run when the \code{Initialize} event is received by the agent. This event is fired by the platform when the agent should initializee itself.
+\item write the output statement in the event handler.
+\end{enumerate}
+
+For running the agent, you should:
+\begin{enumerate}[a)]
+\item Open the dialog box of the ``Run Configurations''.
+\item On the left side, click on ``SARL Application''.
+\item Click on the ``New launch configuration'' button.
+\item On the right side, select the project and the agent to launch.
+\item Click on ``Run''.
+\end{enumerate}
+
+\Emph{It is recommended to put a breakpoint in the event handler, and run the agent in debug mode.}
+
+\subsection{Use the Logging Buildin Capacity}
+
+The goal of this exercise is to use a capacity that is provided by the run-time platform, aka. buildin capacity.
+
+You should:
+\begin{enumerate}[a)]
+\item update the agent code for using the ``Logging'' capacity.
+\item May anything else be changed in the code?
+\end{enumerate}
+
+\subsection{Spawning Another Agent}
+
+Most of the time, a system is composed by more than one agent. This exercise will enable you to launch another agent that is displaying ``Welcome'' on the output console also.
+
+You should:
+\begin{enumerate}[a)]
+\item create a second agent \code{Agent2}, with its \code{Initialize} event handler that is displaying the welcome message.
+\item Update the code of \code{Agent1} for using the \code{DefaultContextInteractions} buildin capacity. This capacity permits to do something with the context in which the agent is living, aka. the default context.
+\item Update the \code{Initialize} event handler of \code{Agent1} for spawning an agent of type \code{Agent2}.
+\item create a third agent \code{Agent3}, with its \code{Initialize} event handler that is displaying the welcome message.
+\item Update the \code{Initialize} event handler of \code{Agent1} for spawning an agent of type \code{Agent3}.
+\end{enumerate}
+
+\subsection{Say Hello to Every Ones}
+
+Agents are social entities. They are supposed to interact with other agents.
+This exercice enables the \code{Agent1} to say hello to the other agents.
+
+In SARL, the information exchanged between agents are carried out by events.
+The events are put inside an interaction space of a context.
+In this exercise, the default space of the default context will be used.
+It is automatically accessible when using the \code{DefaultContextInteractions} capacity.
+
+You should:
+\begin{enumerate}[a)]
+\item create the definition of the event \code{Hello}.
+\item update the code of \code{Agent1} for sending the event to every one after it has spawned the other agents.
+\item update the code of \code{Agent2} and \code{Agent3} for displaying the welcome message when they are receiving the hello event.
+\end{enumerate}
+
+\subsection{Say Hello to a Single Agent}
+
+Broadcasting events may not be the interaction mode between two agents.
+In this exercise, the \code{Hello} message will be sent only to \code{Agent3}.
+
+You should:
+\begin{enumerate}[a)]
+\item update the code of \code{Agent1} for emiting the event with a scope retricted to \code{Agent3}.
+\end{enumerate}
+
+\subsection{Say Localized Welcome}
+
+Agents may have different ways for doing a specific task.
+In this exercise, the agents will be enable to say "Hello" according to their own skills, i.e. their languages.
+
+The concepts of Capacity and Skill are suitable for this task.
+A capacity is the definition of functions (similar to an interface in object-oriented programming) that could be invoked by the agents. A capacity never defines the code of a function, only its prototype.
+A skill is a specific implementation of a capacity (similar to object implementing an interface in object-oriented programming). The skill must provide a code for each function of the implemented capacity.
+
+You should:
+\begin{enumerate}[a)]
+\item define the \code{SayHello} capacity.
+\item define the \code{SayHelloSkill} skill, that permits to say hello in English.
+\item define the \code{DireBonjourSkill} skill, that permits to say hello in French.
+\item update the code of the agents, that are defined previously, for using the \code{SayHello} capacity.
+\item update the code of the agents for calling the function provided by the \code{SayHello} capacity.
+\item update \code{Initialize} event handler of \code{Agent2} for defining its skill that is corresponding to the \code{SayHello} capacity. It should speak English.
+\item update \code{Initialize} event handler of \code{Agent3} for defining its skill that is corresponding to the \code{SayHello} capacity. It should speak French.
+\end{enumerate}
+
+\subsection{Contract Net Protocol (optional)}
+
+In this excercise, you must define a multiagent system that is running a Contract Net Protocol:
+\begin{enumerate}
+\item A customer wants to by a product.
+\item The customer sends a request to a broker for finder the best provider.
+\item The broker asks to a couple of provider they offers for the product.
+\item The broker selects the best offer.
+\item The broker notifies the selected provider about its acceptance with the ID of the customer.
+\item The broker notifies the not selected providers about their rejections.
+\item The broker notifies the customer with the ID of the provider.
+\end{enumerate}
+
+You should:
+\begin{enumerate}[a)]
+\item Define the capacity of the provider.
+\item Define the capacities of the broker.
+\item Write the provider code.
+\item Write the broker code.
+\item Write the customer code.
+\end{enumerate}
+
+\end{document}

@@ -10,22 +10,32 @@
 % character encoding (Linux and MacOS standards)
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
-\usepackage{../common/sarl-listing}
+\usepackage{../common/sarl-colorized-listing}
 
 \graphicspath{{imgs/auto/},{imgs/},{../common/}}
 
-\declaredocument{IA54/MABS Lab Work \#1}{Multiagent Simulation}{UTBM-INFO-IA54-MABS-LW1}
+\declaredocument{Multiagent Simulation}{Lab Work \#2}{UTBM-INFO-IA54-LW2}
 
 \addauthorvalidator*[St\'ephane Galland]{St{\'e}phane}{Galland}{Teacher}
 
 \updateversion{1.0}{\makedate{13}{10}{2015}}{First release on Github}{\upmpublic}
+\incsubversion{\makedate{20}{01}{2016}}{Update the template}{\upmpublic}
+
+\Set[french]{institution}{Laboratoire Syst\`emes et Transport}
+\Set[english]{institution}{Laboratoire Syst\`emes et Transport}
 
 \Set{mafr_contact_name}{\phdname*{St\'ephane}{Galland}}
 \Set{mafr_contact_email}{stephane.galland@utbm.fr}
 \Set[french]{mafr_contact_phone}{03~84~58~34~18}
 \Set[english]{mafr_contact_phone}{+33 384~583~418}
 
-\gdef\skeletonName{\texttt{\mbox{IA54\_MABS\_LW1\_skeleton\string.jar}}}
+\gdef\skeletonName{\texttt{\mbox{IA54\_LW2\_skeleton\string.jar}}}
+
+\newif\ifCODESKELETON
+\CODESKELETONtrue
+
+\newif\ifJANUSINCLASSPATH
+\JANUSINCLASSPATHtrue
 
 \begin{document}
 
