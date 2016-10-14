@@ -56,7 +56,7 @@ public class Vector2i extends Tuple2i<Vector2i> {
 		if (normalize) {
 			try {
 				normalize();
-			} catch (Throwable _) {
+			} catch (Throwable ex) {
 				//
 			}
 		}
@@ -78,7 +78,7 @@ public class Vector2i extends Tuple2i<Vector2i> {
 		if (normalize) {
 			try {
 				normalize();
-			} catch (Throwable _) {
+			} catch (Throwable ex) {
 				//
 			}
 		}
@@ -102,7 +102,7 @@ public class Vector2i extends Tuple2i<Vector2i> {
 		if (normalize) {
 			try {
 				normalize();
-			} catch (Throwable _) {
+			} catch (Throwable ex) {
 				//
 			}
 		}

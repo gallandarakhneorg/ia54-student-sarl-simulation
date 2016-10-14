@@ -61,8 +61,8 @@ agent Environment {
 				this.listeners += o
 			}
 		}
-		setSkill(typeof(MazeManager), new DefaultMazeManagerSkill(width, height))
-		setSkill(typeof(MazeFrontEnd), new DefaultMazeFrontEndSkill())
+		setSkill(new DefaultMazeManagerSkill(width, height), typeof(MazeManager))
+		setSkill(new DefaultMazeFrontEndSkill(), typeof(MazeFrontEnd))
 		this.controller = new Controller(defaultSpace, defaultAddress)
 		var pacmanBody = createPacman
 		this.player = new Player(pacmanBody.agentId, Logger::getLogger(ID.toString))

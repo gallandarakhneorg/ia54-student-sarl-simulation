@@ -57,6 +57,7 @@ public class PacManSimulator {
 	 */
 	public static int WAITING_DURATION = 500;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) throws Exception {
 		Boot.setOffline(true);
 		Boot.setVerboseLevel(LoggerCreator.toInt(Level.INFO));
