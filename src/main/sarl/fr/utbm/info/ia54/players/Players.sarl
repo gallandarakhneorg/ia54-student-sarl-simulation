@@ -53,7 +53,7 @@ agent Ghost {
 	}
 	
 	on Destroy {
-		<DefaultMazeMotionSkill>clearSkill(typeof(MazeMotion))
+		clearSkill(typeof(MazeMotion))
 	}
 	
 	on PacManIsDead {

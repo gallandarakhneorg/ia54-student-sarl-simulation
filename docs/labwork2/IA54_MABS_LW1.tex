@@ -10,26 +10,28 @@
 % character encoding (Linux and MacOS standards)
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{url}
 \usepackage{../common/sarl-colorized-listing}
 
 \graphicspath{{imgs/auto/},{imgs/},{../common/}}
 
-\declaredocument{Multiagent Simulation}{Lab Work \#2}{UTBM-INFO-IA54-LW2}
+\declaredocument{Multiagent Simulation}{MABS Lab Work \#1}{UTBM-INFO-IA54-MABS-LW1}
 
 \addauthorvalidator*[St\'ephane Galland]{St{\'e}phane}{Galland}{Teacher}
 
 \updateversion{1.0}{\makedate{13}{10}{2015}}{First release on Github}{\upmpublic}
 \incsubversion{\makedate{20}{01}{2016}}{Update the template}{\upmpublic}
 
-\Set[french]{institution}{Laboratoire Syst\`emes et Transport}
-\Set[english]{institution}{Laboratoire Syst\`emes et Transport}
+\Set[french]{institution}{D\'epartement Informatique}
+\Set[english]{institution}{Computer Science Department}
 
 \Set{mafr_contact_name}{\phdname*{St\'ephane}{Galland}}
 \Set{mafr_contact_email}{stephane.galland@utbm.fr}
 \Set[french]{mafr_contact_phone}{03~84~58~34~18}
 \Set[english]{mafr_contact_phone}{+33 384~583~418}
 
-\gdef\skeletonName{\texttt{\mbox{IA54\_LW2\_skeleton\string.jar}}}
+\gdef\skeletonName{\texttt{\mbox{IA54\_MABS\_LW1\_skeleton\string.jar}}}
 
 \newif\ifCODESKELETON
 \CODESKELETONtrue
@@ -46,9 +48,7 @@ The goal of this lab work session is to write a simulator of the famous Pacman g
 You shall learn: 
 \begin{itemize}
 \item How to write the agent perception computation.
-\item How to write the agent perception action mechanism.
 \item How to write the Ghost behavior.
-\item How to synchronize the agents.
 \end{itemize}
 
 \input{../common/install}
@@ -82,34 +82,13 @@ This capacity is \texttt{MazeManager}, defined in the file \texttt{fr/utbm/info/
 
 
 You must create a skill, i.e. an implementation of a capacity, for the capacity \texttt{MazeManager}.
-In the code skeleton, this skill is named \texttt{DefaultMazeManagerSkill}, and all the functions inside must be code.
+In the code skeleton, this skill is named \texttt{DefaultMazeManagerSkill}, and all the functions marked with \code {TODO} must be coded.
 The skill contains a reference to the maze.
 
 You should:
 \begin{enumerate}[a)]
 \item implement the functions in \texttt{DefaultMazeManagerSkill} that implements the functions defined in \texttt{MazeManager}.
 \end{enumerate}
-
-Two functions may be overriden for coding the skill:
-\begin{itemize}
-\item \texttt{def install}: it is invoked when the agent is starting to use the skill; and
-\item \texttt{def uninstall}: it is invoked when the agent is stopping to use the skill.
-\end{itemize}
-
-\subsection{Capacity to be the Front-End to Players}
-
-The agent \texttt{Environment} is also in charge of providing the perceptions to the playing agents, i.e. the ghosts, and to accept the actions from them.
-It means that this agent has the capacity to be the front-end to the player.
-This capacity is \texttt{MazeFrontEnd}, defined in the file \texttt{fr/utbm/info/ia54/environment/agent/Capacities.sarl}.
-
-You should:
-\begin{enumerate}[a)]
-\item implement the functions in \texttt{DefaultMazeFrontEndSkill} that implements the functions defined in \texttt{MazeFrontEnd}.
-\end{enumerate}
-
-Be sure that your capacity is creating an interaction space from the space specification \texttt{MazeSpaceSpecification}, and with the proper ID.
-
-You could take a look in the definition of \texttt{DefaultMazeMotionSkill} that is the counter part (in the players) of the \texttt{DefaultMazeFrontEndSkill} capacity.
 
 \subsection{Ghost Behavior}
 

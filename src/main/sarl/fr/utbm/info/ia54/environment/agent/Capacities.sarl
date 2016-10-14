@@ -308,27 +308,27 @@ skill DefaultMazeMotionSkill implements MazeMotion {
 	
 	uses DefaultContextInteractions, Behaviors
 	
-	var space : MazeSpace
+	var ^space : MazeSpace
 	
 	var binder : SkillBinder
 	
 	def install {
 		var dc = defaultContext
 		var spaceId = MazeSpaceUtils::getSpaceIDInContext(dc)
-		this.space = dc.getSpace(spaceId)
-		while (space === null) {
+		this.^space = dc.getSpace(spaceId)
+		while (^space === null) {
 			// wait for the creation of the space
 		}
 		this.binder = new SkillBinder(asEventListener, owner.ID)
-		this.space.spawnBody(this.binder)
+		this.^space.spawnBody(this.binder)
 	}
 	
 	def uninstall {
-		this.space.killBody(this.binder)
+		this.^space.killBody(this.binder)
 	}
 	
 	def move(direction : Direction) {
-		this.space.influence(this.binder.currentTime, this.binder.ID, direction)
+		this.^space.influence(this.binder.currentTime, this.binder.ID, direction)
 	}
 
 }

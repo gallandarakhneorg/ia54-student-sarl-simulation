@@ -119,8 +119,8 @@ agent Environment {
 	on Destroy {
 		firePlayerUnbinding
 		fireControllerUnbinding;
-		<DefaultMazeManagerSkill>clearSkill(typeof(MazeManager));
-		<DefaultMazeFrontEndSkill>clearSkill(typeof(MazeFrontEnd))
+		clearSkill(typeof(MazeManager));
+		clearSkill(typeof(MazeFrontEnd))
 	}
 	
 	on Action [occurrence.time >= time] {
