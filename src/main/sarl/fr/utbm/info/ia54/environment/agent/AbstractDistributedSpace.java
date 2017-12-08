@@ -22,7 +22,6 @@
 package fr.utbm.info.ia54.environment.agent;
 
 import io.janusproject.kernel.repository.UniqueAddressParticipantRepository;
-import io.janusproject.kernel.space.DistributedSpace;
 import io.janusproject.kernel.space.SpaceBase;
 import io.janusproject.services.distributeddata.DMap;
 import io.janusproject.services.distributeddata.DistributedDataStructureService;
@@ -48,7 +47,7 @@ import com.google.inject.Inject;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-abstract class AbstractDistributedSpace extends SpaceBase implements DistributedSpace {
+abstract class AbstractDistributedSpace extends SpaceBase {
 
 	/** Name of the shared attribute that is the ID of the creator of the space.
 	 */
@@ -81,9 +80,9 @@ abstract class AbstractDistributedSpace extends SpaceBase implements Distributed
 		super(id);
 		assert (id != null);
 		this.agents = new UniqueAddressParticipantRepository<>(
-				getID().getID().toString() + "-mazespace-agents", //$NON-NLS-1$
+				getSpaceID().getID().toString() + "-mazespace-agents", //$NON-NLS-1$
 				factory);
-		this.sharedAttributes = factory.getMap(getID().getID().toString() + "-mazespace-attributes"); //$NON-NLS-1$
+		this.sharedAttributes = factory.getMap(getSpaceID().getID().toString() + "-mazespace-attributes"); //$NON-NLS-1$
 	}
 
 	@Override
@@ -124,8 +123,8 @@ abstract class AbstractDistributedSpace extends SpaceBase implements Distributed
 		try {
 			this.network.publish(new UUIDScope(scope), event);
 		} catch (Exception e) {
-			this.logger.error(AbstractDistributedSpace.class,
-					"CANNOT_NOTIFY_OVER_NETWORK", scope, event, e); //$NON-NLS-1$
+			this.logger.error(
+					"Cannot notify over the network; scope={0}, event={1}, exception={2}", scope, event, e); //$NON-NLS-1$
 		}
 	}
 

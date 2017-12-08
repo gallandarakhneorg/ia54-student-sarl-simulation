@@ -22,7 +22,6 @@ package fr.utbm.info.ia54.environment.agent;
 
 import io.sarl.lang.core.Address;
 import io.sarl.lang.core.EventSpace;
-import io.sarl.util.Scopes;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -51,8 +50,9 @@ public final class Controller {
 	public void startSimulation() {
 		if (!this.started.getAndSet(true)) {
 			RunBeginingOfStep event = new RunBeginingOfStep();
-			event.setSource(this.address);
-			this.space.emit(event, Scopes.addresses(this.address));
+			this.space.emit(this.address.getUUID(), event, (it) -> {
+				return it.getUUID().equals(this.address.getUUID());
+			});
 		}
 	}
 	

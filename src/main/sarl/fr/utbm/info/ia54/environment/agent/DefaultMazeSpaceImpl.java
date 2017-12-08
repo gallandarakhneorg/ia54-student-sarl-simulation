@@ -87,7 +87,7 @@ class DefaultMazeSpaceImpl extends AbstractDistributedSpace implements MazeSpace
 	@Override
 	public void influence(int influenceTime, UUID emitter, Direction influence) {
 		Event event = new Action(influenceTime, influence);
-		event.setSource(new Address(getID(), emitter));
+		event.setSource(new Address(getSpaceID(), emitter));
 		if (this.environmentAgent != null) {
 			fireAsync(this.environmentAgent, event);
 		} else {
@@ -101,8 +101,8 @@ class DefaultMazeSpaceImpl extends AbstractDistributedSpace implements MazeSpace
 			UUID id = ((UUIDScope) scope).getID();
 			putOnEventBus(event, id);
 		} else {
-			this.logger.error(DefaultMazeSpaceImpl.class,
-					"INVALID_SCOPE", scope, event); //$NON-NLS-1$
+			this.logger.error(
+					"Invalid scope {0} for event {1}", scope, event); //$NON-NLS-1$
 		}
 	}
 	
