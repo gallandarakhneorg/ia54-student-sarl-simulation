@@ -60,12 +60,6 @@ agent Ghost {
 		killMe
 	}
 	
-	def test {
-		var tab = <Object>newArrayList
-		
-		var f = tab.findFirst [ equals(4) ]
-	}
-
 	on Perception {
 		var freeDirections = newArrayList
 		freeDirections.addAll(Direction::values)

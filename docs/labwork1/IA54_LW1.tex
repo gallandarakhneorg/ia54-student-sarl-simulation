@@ -4,7 +4,7 @@
 % http://www.arakhne.org/autolatex
 %----------------------------------------
 
-\documentclass[article,english,nodocumentinfo]{multiagentfrreport}
+\documentclass[article,english,nodocumentinfo]{utbmciadreport}
 
 % The TeX code is entering with UTF8
 % character encoding (Linux and MacOS standards)
@@ -19,14 +19,6 @@
 \addauthorvalidator*[St\'ephane Galland]{St{\'e}phane}{Galland}{Teacher}
 
 \updateversion{1.0}{\makedate{20}{01}{2016}}{First release on Github}{\upmpublic}
-
-\Set[french]{institution}{Laboratoire Syst\`emes et Transport}
-\Set[english]{institution}{Laboratoire Syst\`emes et Transport}
-
-\Set{mafr_contact_name}{\phdname*{St\'ephane}{Galland}}
-\Set{mafr_contact_email}{stephane.galland@utbm.fr}
-\Set[french]{mafr_contact_phone}{03~84~58~34~18}
-\Set[english]{mafr_contact_phone}{+33 384~583~418}
 
 \newif\ifCODESKELETON
 \CODESKELETONfalse
@@ -69,7 +61,7 @@ You should:
 For running the agent, you should:
 \begin{enumerate}[a)]
 \item Open the dialog box of the ``Run Configurations''.
-\item On the left side, click on ``SARL Application''.
+\item On the left side, click on ``SARL Agent''.
 \item Click on the ``New launch configuration'' button.
 \item On the right side, select the project and the agent to launch.
 \item Click on ``Run''.

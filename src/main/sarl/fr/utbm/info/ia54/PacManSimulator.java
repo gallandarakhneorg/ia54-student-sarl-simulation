@@ -66,7 +66,6 @@ public class PacManSimulator {
 		PacManGUI ui = new PacManGUI(WAITING_DURATION);
 		
 		Boot.startJanus(
-				(Class) null,
 				Environment.class,
 				WIDTH,
 				HEIGHT,
