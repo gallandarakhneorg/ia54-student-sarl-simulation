@@ -21,6 +21,8 @@
 
 package fr.utbm.info.ia54.environment.agent;
 
+import java.util.concurrent.locks.ReadWriteLock;
+
 import org.arakhne.afc.vmutil.locale.Locale;
 
 import io.janusproject.services.distributeddata.DistributedDataStructureService;
@@ -31,6 +33,7 @@ import io.sarl.lang.core.SpaceSpecification;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Provider;
 
 /** Space that is representing the Jaak environment.
  *
@@ -47,6 +50,9 @@ class MazeSpaceSpecification implements SpaceSpecification<MazeSpace> {
 	@Inject
 	private Injector injector;
 
+	@Inject
+	private Provider<ReadWriteLock> lockProvider;
+	
 	/**
 	 */
 	public MazeSpaceSpecification() {
@@ -73,7 +79,7 @@ class MazeSpaceSpecification implements SpaceSpecification<MazeSpace> {
 	 */
 	public MazeSpace createSpace(SpaceID spaceId, DistributedDataStructureService factory,
 			EventListener environmentAgent) {
-		MazeSpace space = new DefaultMazeSpaceImpl(spaceId, factory, environmentAgent);
+		MazeSpace space = new DefaultMazeSpaceImpl(spaceId, factory, this.lockProvider, environmentAgent);
 		this.injector.injectMembers(space);
 		return space;
 	}

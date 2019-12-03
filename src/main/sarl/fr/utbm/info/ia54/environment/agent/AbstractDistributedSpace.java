@@ -33,12 +33,16 @@ import io.sarl.lang.core.EventListener;
 import io.sarl.lang.core.Scope;
 import io.sarl.lang.core.SpaceID;
 import io.sarl.lang.util.SynchronizedSet;
-import io.sarl.util.Collections3;
+import io.sarl.util.concurrent.Collections3;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.UUID;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.logging.Level;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /** Abstract implementation of a distributed space.
  *
@@ -75,13 +79,15 @@ abstract class AbstractDistributedSpace extends SpaceBase {
 	/**
 	 * @param id - the identifier of the space.
 	 * @param factory - the factory to be used for creating distributed data structures.
+	 * @param lockProvider - the provider of locks.
 	 */
-	public AbstractDistributedSpace(SpaceID id, DistributedDataStructureService factory) {
+	public AbstractDistributedSpace(SpaceID id, DistributedDataStructureService factory,
+			Provider<ReadWriteLock> lockProvider) {
 		super(id);
 		assert (id != null);
 		this.agents = new UniqueAddressParticipantRepository<>(
 				getSpaceID().getID().toString() + "-mazespace-agents", //$NON-NLS-1$
-				factory);
+				factory, lockProvider);
 		this.sharedAttributes = factory.getMap(getSpaceID().getID().toString() + "-mazespace-attributes"); //$NON-NLS-1$
 	}
 
@@ -123,8 +129,10 @@ abstract class AbstractDistributedSpace extends SpaceBase {
 		try {
 			this.network.publish(new UUIDScope(scope), event);
 		} catch (Exception e) {
-			this.logger.error(
-					"Cannot notify over the network; scope={0}, event={1}, exception={2}", scope, event, e); //$NON-NLS-1$
+			this.logger.getKernelLogger().log(
+					Level.SEVERE,
+					MessageFormat.format("Cannot notify over the network; scope={0}, event={1}, exception={2}",
+					scope, event, e)); //$NON-NLS-1$
 		}
 	}
 

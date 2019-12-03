@@ -22,10 +22,8 @@ package fr.utbm.info.ia54;
 
 import fr.utbm.info.ia54.environment.agent.Environment;
 import fr.utbm.info.ia54.ui.PacManGUI;
-import io.janusproject.Boot;
-import io.janusproject.util.LoggerCreator;
-
-import java.util.logging.Level;
+import io.sarl.bootstrap.SRE;
+import io.sarl.bootstrap.SREBootstrap;
 
 /**
  * Launcher of the simulation framework.
@@ -57,15 +55,12 @@ public class PacManSimulator {
 	 */
 	public static int WAITING_DURATION = 500;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) throws Exception {
-		Boot.setOffline(true);
-		Boot.setVerboseLevel(LoggerCreator.toInt(Level.INFO));
-		Boot.showJanusLogo();
+		final SREBootstrap boot = SRE.getBootstrap();
 		
 		PacManGUI ui = new PacManGUI(WAITING_DURATION);
 		
-		Boot.startJanus(
+		boot.startAgent(
 				Environment.class,
 				WIDTH,
 				HEIGHT,

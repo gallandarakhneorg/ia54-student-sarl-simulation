@@ -29,7 +29,12 @@ import io.sarl.lang.core.EventListener;
 import io.sarl.lang.core.Scope;
 import io.sarl.lang.core.SpaceID;
 
+import java.text.MessageFormat;
 import java.util.UUID;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.logging.Level;
+
+import com.google.inject.Provider;
 
 /** Abstract implementation of a distributed space.
  *
@@ -45,12 +50,14 @@ class DefaultMazeSpaceImpl extends AbstractDistributedSpace implements MazeSpace
 	/**
 	 * @param id - the identifier of the space.
 	 * @param factory - the factory to be used for creating distributed data structures.
+	 * @param lockProvider - the provider of locks.
 	 * @param environmentAgent - the reference to the agent listener which is managing the environment,
 	 * or <code>null</code> if the current instance of the space is not directly linked to the
 	 * environment agent.
 	 */
-	public DefaultMazeSpaceImpl(SpaceID id, DistributedDataStructureService factory, EventListener environmentAgent) {
-		super(id, factory);
+	public DefaultMazeSpaceImpl(SpaceID id, DistributedDataStructureService factory,
+			Provider<ReadWriteLock> lockProvider, EventListener environmentAgent) {
+		super(id, factory, lockProvider);
 		this.environmentAgent = environmentAgent;
 	}
 
@@ -101,8 +108,9 @@ class DefaultMazeSpaceImpl extends AbstractDistributedSpace implements MazeSpace
 			UUID id = ((UUIDScope) scope).getID();
 			putOnEventBus(event, id);
 		} else {
-			this.logger.error(
-					"Invalid scope {0} for event {1}", scope, event); //$NON-NLS-1$
+			this.logger.getKernelLogger().log(
+					Level.SEVERE,
+					MessageFormat.format("Invalid scope {0} for event {1}", scope, event)); //$NON-NLS-1$
 		}
 	}
 	
