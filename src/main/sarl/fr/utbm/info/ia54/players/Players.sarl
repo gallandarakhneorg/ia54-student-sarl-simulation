@@ -49,7 +49,7 @@ agent Ghost {
 	var previousDirection : Direction
 
 	on Initialize {
-		setSkill(new DefaultMazeMotionSkill, typeof(MazeMotion))
+		setSkill(new DefaultMazeMotionSkill)
 	}
 	
 	on Destroy {
@@ -63,17 +63,19 @@ agent Ghost {
 	on Perception {
 		var freeDirections = newArrayList
 		freeDirections.addAll(Direction::values)
+		
 		var pacman : PacmanBody
-		for ( percept : occurrence.objects) {
-			var v = percept.position - occurrence.position
+		for (percept : occurrence.objects) {
 			if (percept instanceof PacmanBody) {
 				pacman = percept
 			}
+			var v = percept.position - occurrence.position
 			if (v.length <= 1 && !percept.pickable) {
 				var direction = Direction::fromVector(v)
 				freeDirections -= direction
 			}
-		}	
+		}
+			
 		if (pacman !== null) {
 			var v = pacman.position - occurrence.position
 			var direction = Direction::fromVector(v)
@@ -87,10 +89,12 @@ agent Ghost {
 			freeDirections.randomMove
 		}
 	}
+
 	def memorizeAndMoveTo(direction : Direction) {
 		this.previousDirection = direction
 		move(direction)
 	}
+
 	def randomMove(directions : List<Direction>) {
 		var selectedDirection : Direction
 		if (!directions.empty) {

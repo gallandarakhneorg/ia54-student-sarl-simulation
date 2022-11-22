@@ -36,12 +36,6 @@ import java.util.UUID;
 */
 public interface MazeSpace extends Space {
 
-	/** Replies the identifier of the creator of the space.
-	 *
-	 * @return the identifier of the space creator.
-	 */
-	UUID getCreatorID();
-
 	/** Destroy the space.
 	 */
 	void destroy();

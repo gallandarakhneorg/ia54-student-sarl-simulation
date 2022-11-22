@@ -192,7 +192,7 @@ skill DefaultMazeManagerSkill implements MazeManager {
 				}
 			}
 		}
-		
+
 		return false
 	}
 	
@@ -283,11 +283,8 @@ skill DefaultMazeFrontEndSkill implements MazeFrontEnd {
 	
 	def install {
 		var spaceId = MazeSpaceUtils.getSpaceIDInContext(defaultContext)
-		this.mazeSpace = defaultContext.getOrCreateSpaceWithSpec(typeof(MazeSpaceSpecification), spaceId, asEventListener)
-		// Ensure that the agent is the creator of the space.
-		if (mazeSpace.creatorID !== null && mazeSpace.creatorID != owner.ID) {
-			killMe
-		}
+		this.mazeSpace = defaultContext.getOrCreateSpaceWithSpec(typeof(MazeSpaceSpecification), spaceId,
+			asEventListener)
 	}
 	
 	def sendPerception(time : int, bodyID : UUID, objects : List<PacmanObject>, position : Point2i) {
