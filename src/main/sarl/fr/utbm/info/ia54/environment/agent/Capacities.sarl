@@ -28,10 +28,11 @@ import fr.utbm.info.ia54.environment.maze.Maze
 import fr.utbm.info.ia54.environment.maze.PacmanBody
 import fr.utbm.info.ia54.environment.maze.PacmanObject
 import fr.utbm.info.ia54.environment.maze.PillObject
+import fr.utbm.info.ia54.environment.maze.SuperPowerAccessor
 import fr.utbm.info.ia54.math.Point2i
-import io.sarl.core.Behaviors
-import io.sarl.core.DefaultContextInteractions
-import io.sarl.core.Lifecycle
+import io.sarl.api.core.Behaviors
+import io.sarl.api.core.DefaultContextInteractions
+import io.sarl.api.core.Lifecycle
 import io.sarl.lang.core.Address
 import java.util.BitSet
 import java.util.List
@@ -39,7 +40,6 @@ import java.util.Map
 import java.util.Random
 import java.util.TreeMap
 import java.util.UUID
-import fr.utbm.info.ia54.environment.maze.SuperPowerAccessor
 
 /** Capacity to manage a maze.
  * 
@@ -143,6 +143,28 @@ skill DefaultMazeManagerSkill implements MazeManager {
 	}
 	
 	def applyActions(actions : List<MazeChangeQuery>) : boolean {
+//		
+//		// For each action (motion) in the provided actions:
+//		// - Compute the new position of the body
+//		// - Move the body in the maze
+//		
+//		
+//		for (motionAction : actions) {
+//			var body = this.maze.getAgentBody(motionAction.emitter)
+//			var new_position = body.position + motionAction.getChange.toVector
+//			
+//			this.maze.setObjectAt(body.position.x, body.position.y, null)
+//			this.maze.setObjectAt(new_position.x, new_position.y, body)
+//		}
+//		
+//		// Issues:
+//		
+//		// I1: The bodies could be moved in cells with walls
+//		// I2: If two ghosts decides to go in the same cell, what is the winning agent?
+//		
+//		
+//		return false
+		
 		var expectedMotions = new TreeMap
 		for (a : actions) {
 			var body = this.maze.getAgentBody(a.emitter)
@@ -154,7 +176,7 @@ skill DefaultMazeManagerSkill implements MazeManager {
 			}
 			if (newPosition == body.position || this.maze.canMoveInside(newPosition.x, newPosition.y)) {
 				var l = expectedMotions.get(newPosition)
-				if (l == null) {
+				if (l === null) {
 					l = newArrayList
 					expectedMotions.put(newPosition, l)
 				}
@@ -167,7 +189,7 @@ skill DefaultMazeManagerSkill implements MazeManager {
 			if (change.value.size > 1) {
 				var pacman = change.value.findFirst [ it instanceof PacmanBody ] as PacmanBody
 				if (pacman !== null && !pacman.superPacman) {
-					return true
+					//return true
 				}
 				var obj = change.value.get(this.random.nextInt(change.value.size))
 				resolvedMotions.put(change.key, obj)
@@ -197,6 +219,93 @@ skill DefaultMazeManagerSkill implements MazeManager {
 	}
 	
 	def getPerceptions : Map<AgentBody, List<PacmanObject>> {
+		
+		
+		
+		for (body : this.maze.agentBodies) {
+			
+			var uuid = body.agentId
+			
+			if (body instanceof PacmanBody) {
+				
+				println("Found pacman body for " + body.agentId)
+				
+			} else {
+				
+				println("Found ghost body for " + body.agentId)
+				
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*var perceptions = newHashMap
+		
+		for (body : this.maze.agentBodies) {
+			// Compute the list of perceived objects for the body
+			var perceivedObjects = <PacmanObject>newArrayList
+			
+			var position = body.position
+			
+			var northPosition = position + Direction.NORTH.toVector
+			var northObject = this.maze.getObjectAt(northPosition.x, northPosition.y)
+			if (northObject !== null) {
+				perceivedObjects += northObject
+			}
+			
+			var southPosition = position + Direction.SOUTH.toVector
+			var southObject = this.maze.getObjectAt(southPosition.x, southPosition.y)
+			if (southObject !== null) {
+				perceivedObjects += southObject
+			}
+
+			var eastPosition = position + Direction.EAST.toVector
+			var eastObject = this.maze.getObjectAt(eastPosition.x, eastPosition.y)
+			if (eastObject !== null) {
+				perceivedObjects += eastObject
+			}
+			
+			var westPosition = position + Direction.WEST.toVector
+			var westObject = this.maze.getObjectAt(westPosition.x, westPosition.y)
+			if (westObject !== null) {
+				perceivedObjects += westObject
+			}
+
+			perceptions.put(body, perceivedObjects)
+		}
+		
+		// Issues:
+		
+		// I1 : The distance of perception for all bodies is equal to 1 cell
+		// I2 : There is a perception throught walls
+		
+		return perceptions*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		var perceptions = new TreeMap
 		for(body : this.maze.agentBodies) {
 			

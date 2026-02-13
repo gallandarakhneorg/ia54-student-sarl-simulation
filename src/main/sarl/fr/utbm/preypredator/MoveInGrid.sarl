@@ -1,0 +1,7 @@
+package fr.utbm.preypredator
+
+capacity MoveInGrid {
+	
+	def move(dx : int, dy : int)
+	
+}

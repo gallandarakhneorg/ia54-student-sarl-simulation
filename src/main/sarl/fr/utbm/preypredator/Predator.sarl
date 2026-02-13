@@ -1,0 +1,43 @@
+package fr.utbm.preypredator
+
+import io.sarl.api.core.Initialize
+import java.util.List
+import java.util.Random
+
+import static java.lang.Math.*
+
+agent Predator {
+
+	uses MoveInGrid
+
+	var random = new Random
+
+	on Initialize {
+		var gridEnvironment = occurrence.parameters.get(0) as GridEnvironment
+		setSkill(new MoveInGridImpl(gridEnvironment))
+	}
+
+	def toRange(value : int) : int {
+		return min(max(-1, value), 1)
+	}
+
+	def findPrey(perception : List<Body>) : Body {
+		for (body : perception) {
+			if (body.isPrey) {
+				return body
+			}
+		}
+		return null
+	}
+	
+	on Perception {
+		// THIS CODE IS NOT THE BEST SOLUTION FOR CAPTURING THE PREY
+		var prey = occurrence.perceivedObjects.findPrey 
+		if (prey !== null) {
+			move(prey.x.toRange, prey.y.toRange)
+		} else {
+			move(this.random.nextInt(2) - 1, this.random.nextInt(2) - 1)
+		}
+	}
+	
+}

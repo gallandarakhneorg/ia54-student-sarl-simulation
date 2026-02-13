@@ -22,8 +22,8 @@ package fr.utbm.info.ia54;
 
 import fr.utbm.info.ia54.environment.agent.Environment;
 import fr.utbm.info.ia54.ui.PacManGUI;
-import io.sarl.bootstrap.SRE;
-import io.sarl.bootstrap.SREBootstrap;
+import io.sarl.lang.core.SRE;
+import io.sarl.lang.core.SREBootstrap;
 
 /**
  * Launcher of the simulation framework.
@@ -45,7 +45,7 @@ public class PacManSimulator {
 
 	/** Number of ghosts at the start-up.
 	 */
-	public static int NB_GHOSTS = 3;
+	public static int NB_GHOSTS = 5;
 	
 	/** Percpetion distance for the agents (usually the ghosts).
 	 */

@@ -1,0 +1,3 @@
+package fr.utbm.preypredator
+
+event StartSimulationLoop

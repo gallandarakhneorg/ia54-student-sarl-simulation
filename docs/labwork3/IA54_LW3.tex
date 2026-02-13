@@ -1,0 +1,183 @@
+%----------------------------------------
+% IT IS RECOMMENDED TO USE AUTOLATEX FOR
+% COMPILING THIS DOCUMENT.
+% http://www.arakhne.org/autolatex
+%----------------------------------------
+
+\documentclass[english,nodocumentinfo,nopubpage]{utbmciadreport}
+
+% The TeX code is entering with UTF8
+% character encoding (Linux and MacOS standards)
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{../common/sarl-colorized-listing}
+
+
+\graphicspath{{./}}
+
+\declaredocument{Introduction to SARL}{Tutorial Session \#3}{UTBM-INFO-AI51-TU3}
+
+\addauthorvalidator*[St\'ephane Galland]{St{\'e}phane}{Galland}{Teacher}
+
+\updateversion{1.0}{\makedate{20}{03}{2023}}{First release on Github}{\upmpublic}
+
+\begin{document}
+
+\section{Goal of this Tutorial Session}
+
+The goal of this tutorial session is to introduce the basics concepts of agent-oriented programming with SARL.
+The general goal of the tutorial is to remind several key points related to the coding with SARL.
+
+\section{Work to be Done during the Tutorial Session}
+
+The following sections describe the work to be done during this tutorial session. It is recommended to work 20 minutes max on each exercice.
+
+\subsection{Exercice 1 - Events and Basic Lifecycle}
+
+The goal of this exercice is to remind the base elements related to the events and agent lifecycle in SARL.
+
+\begin{enumerate}[a)]
+\item Define an event with the type name \code{Presentation}\ that represents a message of presentation from one agent to another agent.
+\item Define an agent with the type name \code{Agent1}\ that has the following behavior:
+	\begin{itemize}
+	\item When it is starting, it is displaying a log message that is indicating it is alive.
+	\item When the agent is receiving an event occurrence of type \code{Presentation}, it is increasing an internal counter that is counting the number of presentations received by the agent.
+	\item When the agent is destroying itself, it has to log the total number of presentations that were received during its live.
+	\end{itemize}
+\end{enumerate}
+
+
+\subsection{Exercice 2 - Event Communication}
+
+The goal of this exercice is to remind the base of the agent communication in SARL.
+
+\begin{enumerate}[a)]
+\item Define an agent with the type name \code{Agent2}\ that has the following behavior:
+	\begin{itemize}
+	\item When it is starting, it is emitting an event of type \code{Presentation}\ to notify all the other agents in the system that this new agent is alive.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent3} that is spawning an agent of type \code{Agent1}\ and \code{Agent2}.
+\item Kill all the agents for stopping the application.
+\end{enumerate}
+
+\subsection{Exercice 3 - AgentSpawned}
+
+The goal of this exercice is to introduce the predefined events in SARL, that are dedicated to the agent lifecycle.
+
+\begin{enumerate}[a)]
+\item Define an agent with the type name \code{Agent4}\ that has the following behavior:
+	\begin{itemize}
+	\item After starting, wait 1 minute and kill itself.
+	\end{itemize}
+\item Define an agent with the type name \code{Agent5}\ that has the following behavior:
+	\begin{itemize}
+	\item Wait for the spawning of an agent and display the ID of the spawned agent.
+	\end{itemize}
+\item Update the code of the agent with the type name \code{Agent5}\ in order to:
+	\begin{itemize}
+	\item Spawn 5 agents of type \code{Agent4}.
+	\item Wait for the spawning of the 5 agents.
+	\item Kill all the agents \Emph{after} all the agents were spawned.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Exercice 4 - Capacity and Skill}
+
+The goal of this exercice is to have multiple agents that are implementing in different ways a know-how. This know-how is the capacity to save data into a text-based file format.
+
+\begin{enumerate}[a)]
+\item Define a capacity with the type name \code{DataSave}\ that provides the following function for saving data: \\
+	\code{def saveData(data : List<?>) : void}
+\item Define an implementation (named \code{JsonDataSave}) of the capacity \code{DataSave}\ that is saving the data with the JSON format into the file ``data.json''.
+\item Define an implementation (named \code{XmlDataSave}) of the capacity \code{DataSave}\ that is saving the data with the XML format into the file ``data.xml''.
+\item Create an agent with the type name \code{Agent6}\ that has the following behavior:
+	\begin{itemize}
+	\item Every 1 minute, compute randomly an list of integer values, and save it using the JSON format.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent7}\ that has the following behavior:
+	\begin{itemize}
+	\item Every 1 minute, compute randomly an list of integer values, and save it using the XML format.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent8}\ that has the following behavior:
+	\begin{itemize}
+	\item Spawn an agent of type \code{Agent5}.
+	\item Spawn an agent of type \code{Agent7}.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Exercice 5 - Dynamic Skill}
+
+The goal of this exercice is to have an agent that is implementing in different ways a know-how. This know-how is the capacity to save data into a text-based file format.
+
+\begin{enumerate}[a)]
+\item Create an agent with the type name \code{Agent9}\ that has the following behavior:
+	\begin{itemize}
+	\item Every 1 minute, compute randomly an list of integer values, select the skill randomly between the JSON and XML savings, and save the random data using the selected skill.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent10}\ that has the following behavior:
+	\begin{itemize}
+	\item Spawn an agent of type \code{Agent9}.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Exercice 6 - Parallel Execution}
+
+The goal of this exercice is to introduce the parallel execution of the agents.
+
+\begin{enumerate}[a)]
+\item Create an event with the type name \code{MyEvent}.
+\item Create an agent with the type name \code{Agent11}\ that has the following behavior:
+	\begin{itemize}
+	\item One event handler that is executed when receiving an event occurrence of type \code{MyEvent}, and displaying in the logs the message ``First handler''.
+	\item A second event handler that is executed when receiving an event occurrence of type \code{MyEvent}, and displaying in the logs the message ``Second handler''.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent12}\ that has the following behavior:
+	\begin{itemize}
+	\item Spawn an agent of type \code{Agent11}.
+	\item Every 5 seconds, emit an event of type \code{MyEvent}. The agent of type \code{Agent12}\ should display the two messages.
+	\end{itemize}
+\end{enumerate}
+
+
+\subsection{Exercice 7 - Event handler guard}
+
+The goal of this exercice is to introduce the parallel execution of the agents.
+
+\begin{enumerate}[a)]
+\item Create an agent with the type name \code{Agent13}\ that has the following behavior:
+	\begin{itemize}
+	\item One event handler that is executed when receiving an event occurrence of type \code{MyEvent}, and displaying in the logs the message ``First handler''.
+	\item A second event handler that is executed when receiving an event occurrence of type \code{MyEvent}, and displaying in the logs the message ``Second handler''.
+	\item When an event of type \code{MyEvent}\ is received, the first message \Emph{OR} the second message above should be displayed randomly. In opposite to the previous exercice, only one message is displayed when an event of type \code{MyEvent}\ is received. For helping you, see the documentation related to the ``event guards''.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent14}\ that has the following behavior:
+	\begin{itemize}
+	\item Spawn an agent of type \code{Agent13}.
+	\item Every 5 seconds, emit an event of type \code{MyEvent}. The agent of type \code{Agent13} should display \Emph{one} message.
+	\end{itemize}
+\end{enumerate}
+
+
+\subsection{Exercice 8 - Behavior}
+
+The goal of this exercice is to introduce the concept of \code{behavior}\ that is supported by a specific keyword in the SARL programming language, and represents a code (or behavior) that is run by an agent. An agent could have multiple behaviors that are run in parallel.
+
+\begin{enumerate}[a)]
+\item Create a behavior with the type name \code{Behavior1}\ that has the following behavior:
+	\begin{itemize}
+	\item Every 1 minute, compute randomly an list of integer values, and save it using the JSON format into the file ``data\_int.json''.
+	\end{itemize}
+\item Create a behavior with the type name \code{Behavior2}\ that has the following behavior:
+	\begin{itemize}
+	\item Every 1 minute, compute randomly an list of string values, and save it using the JSON format into the file ``data\_str.json''.
+	\end{itemize}
+\item Create an agent with the type name \code{Agent15}\ that has the following behavior:
+	\begin{itemize}
+	\item Create and register a behavior of type \code{Behavior1}\ into the agent.
+	\item Create and register a behavior of type \code{Behavior2}\ into the agent.
+	\item Run the agent's behaviors.
+	\end{itemize}
+\end{enumerate}
+
+
+\end{document}

@@ -1,0 +1,127 @@
+%----------------------------------------
+% IT IS RECOMMENDED TO USE AUTOLATEX FOR
+% COMPILING THIS DOCUMENT.
+% http://www.arakhne.org/autolatex
+%----------------------------------------
+
+\documentclass[english,nodocumentinfo,nopubpage]{utbmciadreport}
+
+% The TeX code is entering with UTF8
+% character encoding (Linux and MacOS standards)
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{../common/sarl-colorized-listing}
+
+
+\graphicspath{{./}}
+
+\declaredocument{Introduction to SARL}{Tutorial Session \#6}{UTBM-INFO-AI51-TU6}
+
+\addauthorvalidator*[St\'ephane Galland]{St{\'e}phane}{Galland}{Teacher}
+
+\updateversion{1.0}{\makedate{23}{03}{2023}}{First release on Github}{\upmpublic}
+
+\begin{document}
+
+\section{Goal of this Tutorial Session}
+
+The goal of this tutorial session is to introduce the basics concepts of agent-oriented programming with SARL.
+The general goal of the tutorial is to remind several key points related to the coding with SARL.
+
+\section{Work to be Done during the Tutorial Session}
+
+The following sections describe the work to be done during this tutorial session. It is recommended to work 30 minutes on each exercice.
+To do these exercice, it is recommended to read the online documentation of SARL for finding the best functions or capacities to be used.
+
+\subsection{Exercice 1 - Ping-Pong Communication Protocol}
+
+In this exercice, the goal is to implement a basic communication protocol between two agents: the Ping-Pong.
+The principle of this protocol is the following:
+\begin{enumerate}[1.]
+\item The first agent is creating a \code{Ping} event and sent it to the second agent;
+\item When the second agent is receiving a \code{Ping}\ event, the agent has to replies to the emitted of the \code{Ping}\ event with a specific \code{Pong}\ event.
+\item When the first agent is receiving a \code{Pong}\ event, the agent has to replies to the emitted of the \code{Pong}\ event with a specific \code{Ping}\ event.
+\end{enumerate}
+
+The steps to follow for obtaining the answers are:
+\begin{enumerate}
+\item Define the event with the name \code{Pong}.
+\item Define the event with the name \code{Ping}.
+\item Define the agent with the name \code{Agent1}, that is firing a \code{Ping} event to any other agent.
+\item Define the agent with the name \code{Agent2}, that is firing a \code{Pong}\ event when it receives a \code{Ping}\ event. The receiver of the \code{Pong}\ event must be the emitter of the just received \code{Ping}\ event.
+\item Update the code of \code{Agent1} for firing a new \code{Ping}\ event when it receives a \code{Pong} event. The receiver of the \code{Ping}\ event must be the emitter of the just received \code{Pong} event.
+\end{enumerate}
+
+You have to start the two agents to run the Ping-Pong properly. How to start two agent?
+
+\subsection{Exercice 2 - Extended Ping-Pong Communication Protocol}
+
+In the previous exercice, the spawning of the agents, and the fact that the first agent is emitting the initial \code{Ping}\ event when it is started, it may cause issues.
+
+\begin{enumerate}
+\item What is this possible issue in the previous excercice?
+\item Solve the issue by ensuring in the structure and the behavior of your code that the initial occurrence of the \code{Ping}\ event is fired only when the second agent is alive.
+\end{enumerate}
+
+\subsection{Exercice 3 - Contract Net Protocol}
+
+In this excercise, you must define a multiagent system that is running a Contract Net Protocol:
+\begin{enumerate}
+\item A customer wants to by a product.
+\item The customer sends a request to a broker for finder the best provider.
+\item The broker asks to a couple of provider they offers for the product.
+\item The broker selects the best offer.
+\item The broker notifies the selected provider about its acceptance with the ID of the customer.
+\item The broker notifies the not selected providers about their rejections.
+\item The broker notifies the customer with the ID of the provider.
+\end{enumerate}
+
+You should:
+\begin{enumerate}[a)]
+\item Define the capacity of the provider.
+\item Define the capacities of the broker.
+\item Write the provider code.
+\item Write the broker code.
+\item Write the customer code.
+\end{enumerate}
+
+\subsection{Exercice 4 - Basic Simulation Loop with SARL}
+
+In this excercise, you will learn how to implement a basic simulation loop.
+The multiagent system is composed by three agents:
+\begin{itemize}
+\item An agent \code{AgentEnvironment}\ that is representing the agent environment (see Course Slides).
+\item Two agents of type \code{ApplicationAgent}\ that are representing the agents that are doing actions in the agent environment.
+\end{itemize}
+
+For implementing the basic simulation loop, you have to follow the steps below:
+\begin{enumerate}
+\item Define an event \code{Perception}\ that represents a data that must be used by the \code{ApplicationAgent} to decide to do something.
+\item Define an event \code{Action}\ that represents an action that an \code{ApplicationAgent}\ would do in the \code{AgentEnvironment}. This event must contain a string of characters that is description the action to be done.
+\item Define the type \code{AgentEnvironment}\ that have the following behavior:
+	\begin{itemize}
+	\item Define a list of \code{UUID}, named \code{bodies}. This list contains the UUID (identifier of the agent) of all the agents of type \code{ApplicationAgent}\ that are spawned in the system.
+	\item Define the function \code{runStartOfLoop}\ that is looping on the \code{bodies}\ list and send an event of type \code{Perception}\ to each agent with the UUID (the identifier of the agent).
+	\end{itemize}
+\item Define the type \code{ApplicationAgent}\ that have the following behavior:
+	\begin{itemize}
+	\item When the agent receives an event of type \code{Perception}, the agent:
+		\begin{enumerate}[a)]
+		\item Create an instance of the event \code{Action}\ with the action decided by the agent described in the attribute of the event.
+		\item Fire the instance of the event \code{Action}\ to the agent of type \code{AgentEnvironment}.
+		\end{enumerate}
+	\end{itemize}
+\item Update the type \code{AgentEnvironment}\ with the following behavior:
+	\begin{itemize}
+	\item Create an event handler that is corresponding to the receiving of the event \code{Action}.
+	\item The previous event handler must print out the action decided by an \code{ApplicationAgent}\ that is received by the \code{AgentEnvironment}.
+	\item When the \code{AgentEnvironment}\ has received the same number of action events as the number of UUID in the \code{bodies}\ attribute, then the actions of the agents must be applied in the environment and the simulation loop must restart. For restarting the simulation loop, call the function \code{runStartOfLoop}.
+	\end{itemize}
+\item Update the type \code{AgentEnvironment}\ with the following behavior:
+	\begin{itemize}
+	\item At startup, create a given number of \code{ApplicationAgent} and save the UUID of the spawned agents in the \code{bodies}\ attributes.
+	\item Start the simulation loop \Emph{asynchronously}.
+	\end{itemize}
+\end{enumerate}	
+
+\end{document}

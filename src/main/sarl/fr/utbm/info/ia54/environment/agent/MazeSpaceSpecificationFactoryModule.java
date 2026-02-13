@@ -21,9 +21,7 @@
 
 package fr.utbm.info.ia54.environment.agent;
 
-import com.google.inject.AbstractModule;
-
-import io.sarl.sre.spaces.SreSpaceSpecificationFactory;
+import io.sarl.sre.janus.spaces.SreSpaceSpecificationFactory;
 
 /** 
  * @author $Author: sgalland$

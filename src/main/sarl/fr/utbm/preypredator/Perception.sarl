@@ -1,0 +1,11 @@
+package fr.utbm.preypredator
+
+import java.util.List
+
+event Perception {
+	
+	var perceivedObjects : List<Body>
+
+	var agentBody : Body
+
+}

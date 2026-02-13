@@ -1,0 +1,30 @@
+package fr.utbm.preypredator
+
+import java.util.UUID
+import org.eclipse.xtend.lib.annotations.Accessors
+
+class Body {
+
+	@Accessors
+	val id : UUID
+
+	@Accessors
+	val isPrey : boolean
+
+	@Accessors(PUBLIC_GETTER)
+	var x : int
+
+	@Accessors(PUBLIC_GETTER)
+	var y : int
+
+	new (id : UUID, isPrey : boolean) {
+		this.id = id
+		this.isPrey = isPrey
+	}
+
+	def setPosition(x : int, y : int) {
+		this.x = x
+		this.y = y;
+	}
+	
+}

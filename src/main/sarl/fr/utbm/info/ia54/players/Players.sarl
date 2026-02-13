@@ -27,9 +27,10 @@ import fr.utbm.info.ia54.environment.^agent.PacManIsDead
 import fr.utbm.info.ia54.environment.^agent.Perception
 import fr.utbm.info.ia54.environment.maze.Direction
 import fr.utbm.info.ia54.environment.maze.PacmanBody
-import io.sarl.core.Destroy
-import io.sarl.core.Initialize
-import io.sarl.core.Lifecycle
+import io.sarl.api.core.Destroy
+import io.sarl.api.core.Initialize
+import io.sarl.api.core.Lifecycle
+import io.sarl.api.core.Logging
 import java.util.List
 import java.util.Random
 
@@ -42,11 +43,7 @@ import java.util.Random
  */
 agent Ghost {
 	
-	uses MazeMotion, Lifecycle
-
-	val random = new Random
-	
-	var previousDirection : Direction
+	uses MazeMotion, Lifecycle, Logging
 
 	on Initialize {
 		setSkill(new DefaultMazeMotionSkill)
@@ -59,11 +56,76 @@ agent Ghost {
 	on PacManIsDead {
 		killMe
 	}
+
+/*	def isPacmanInPerception(perception : List<PacmanObject>) : boolean {
+		for (obj : perception) {
+			if (obj instanceof PacmanBody) {
+				return true
+			}
+		}
+		return false
+	}
 	
+	def getPacmanFromPerception(perception : List<PacmanObject>) : PacmanBody {
+		for (obj : perception) {
+			if (obj instanceof PacmanBody) {
+				return obj
+			}
+		}
+		return null
+	}
+
+	on Perception {
+		
+		// 1. Decide the best direction for the ghost
+		
+		// 1.a if pacman is perceived and is not a super power pacman then pursue the pacman
+		// 1.b if pacman is perceived and is a super power pacman then flee the pacman
+		// 1.c move randomly if no pacman in perception
+		var direction : Direction
+		
+		// Perception: 
+		var perception = occurrence.objects
+		if (isPacmanInPerception(perception)) {
+			var pacman = getPacmanFromPerception(perception)
+			if (pacman.isSuperPacman) {
+				var motion = pacman.position - occurrence.position
+				direction = Direction.fromVector(motion)
+			} else {
+				var motion = occurrence.position - pacman.position
+				direction = Direction.fromVector(motion)
+			}
+		} else {
+			direction = Direction.random
+		}
+		
+		// 2. Notify the direction to the environment through the agent body
+		move(direction)
+
+		// Issues:
+		
+		// I1: The ghost could select a direction that is corresponding to a wall
+		// I2: The ghost could change to opposite direction in the middle of a corridor, oscillation motion
+	}
+	
+	
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	var previousDirection : Direction
+	
+	val random = new Random
+
 	on Perception {
 		var freeDirections = newArrayList
-		freeDirections.addAll(Direction::values)
-		
+		freeDirections.addAll(Direction.values)
+
 		var pacman : PacmanBody
 		for (percept : occurrence.objects) {
 			if (percept instanceof PacmanBody) {
@@ -75,6 +137,8 @@ agent Ghost {
 				freeDirections -= direction
 			}
 		}
+		
+		info("Free directions = " + freeDirections)
 			
 		if (pacman !== null) {
 			var v = pacman.position - occurrence.position

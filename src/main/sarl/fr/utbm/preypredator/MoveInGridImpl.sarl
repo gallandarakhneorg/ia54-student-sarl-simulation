@@ -1,0 +1,20 @@
+package fr.utbm.preypredator
+
+import io.sarl.api.core.DefaultContextInteractions
+
+skill MoveInGridImpl implements MoveInGrid {
+	
+	uses DefaultContextInteractions
+	
+	val gridEnvironment : GridEnvironment
+
+	new(gridEnvironment : GridEnvironment) {
+		this.gridEnvironment = gridEnvironment
+	}
+	
+	def move(dx : int, dy : int) {
+		this.gridEnvironment.move(this.owner.ID, dx, dy)
+		emit(new DecisionDone)
+	}
+	
+}

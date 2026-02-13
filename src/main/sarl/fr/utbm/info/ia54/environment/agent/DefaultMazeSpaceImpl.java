@@ -28,9 +28,9 @@ import io.sarl.lang.core.Address;
 import io.sarl.lang.core.Event;
 import io.sarl.lang.core.EventListener;
 import io.sarl.lang.core.SpaceID;
-import io.sarl.sre.services.logging.LoggingService;
-import io.sarl.sre.spaces.OpenLocalEventSpace;
-import io.sarl.sre.spaces.SpaceParticipantListener;
+import io.sarl.sre.janus.services.logging.LoggingService;
+import io.sarl.sre.janus.spaces.OpenLocalEventSpace;
+import io.sarl.sre.janus.spaces.SpaceParticipantListener;
 
 /** Abstract implementation of a distributed space.
  *

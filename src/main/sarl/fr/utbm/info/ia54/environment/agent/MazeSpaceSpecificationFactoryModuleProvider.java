@@ -21,10 +21,8 @@
 
 package fr.utbm.info.ia54.environment.agent;
 
-import com.google.inject.Module;
-
-import io.bootique.BQModule;
 import io.bootique.BQModuleProvider;
+import io.bootique.di.BQModule;
 
 /**
  * @author $Author: sgalland$

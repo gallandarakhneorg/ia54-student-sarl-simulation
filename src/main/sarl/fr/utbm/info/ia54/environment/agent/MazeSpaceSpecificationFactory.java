@@ -22,17 +22,16 @@
 package fr.utbm.info.ia54.environment.agent;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 
-import com.google.inject.Injector;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
-
-import io.sarl.core.OpenEventSpace;
+import io.bootique.di.Injector;
+import io.sarl.api.core.OpenEventSpace;
 import io.sarl.lang.core.SpaceSpecification;
-import io.sarl.sre.KernelScope;
-import io.sarl.sre.services.logging.LoggingService;
-import io.sarl.sre.spaces.SpaceParticipantListenerFactory;
-import io.sarl.sre.spaces.SreSpaceSpecificationFactory;
+import io.sarl.sre.janus.KernelScope;
+import io.sarl.sre.janus.services.logging.LoggingService;
+import io.sarl.sre.janus.spaces.SpaceParticipantListenerFactory;
+import io.sarl.sre.janus.spaces.SreSpaceSpecificationFactory;
 
 /** Space that is representing the Jaak environment.
  *

@@ -1,0 +1,79 @@
+package fr.utbm.preypredator
+
+import io.sarl.api.core.DefaultContextInteractions
+import io.sarl.api.core.Initialize
+import io.sarl.api.core.Lifecycle
+import java.util.HashSet
+import java.util.Random
+import java.util.UUID
+
+agent MainAgent {
+
+	uses Lifecycle
+	uses DefaultContextInteractions
+
+	val random = new Random
+
+	var gridEnvironment : GridEnvironment
+
+	val decisions = new HashSet<UUID>
+
+	on Initialize {
+		this.gridEnvironment = new GridEnvironment(7, 7)
+
+		createAgent(true)
+		createAgent(false)
+		createAgent(false)
+		createAgent(false)
+		createAgent(false)
+
+		emit(new StartSimulationLoop) [it.ID == ID]
+	}
+
+	def createAgent(isPrey : boolean) : void {
+		var id = UUID.randomUUID
+		
+		var x = this.random.nextInt(this.gridEnvironment.width)
+		var y = this.random.nextInt(this.gridEnvironment.width)
+		
+		while (this.gridEnvironment.getCellContent(x, y) !== null) {
+			x = this.random.nextInt(this.gridEnvironment.width)
+			y = this.random.nextInt(this.gridEnvironment.width)
+		}
+		
+		this.gridEnvironment.setCellContent(new Body(id, isPrey), x, y)
+
+		var type = if (isPrey) typeof(Prey) else typeof(Predator)
+		spawnInContextWithID(type, id, defaultContext, this.gridEnvironment)
+	}
+
+	on DecisionDone {
+		synchronized (this) {
+			this.decisions.add(occurrence.source.ID)
+			if(this.decisions.size >= 4) {
+				endSimulationLoop
+			}
+		}
+	}
+
+	def endSimulationLoop : void {
+		// This is the place where to update the GUI
+		
+		emit(new StartSimulationLoop)[it.ID == ID]
+	}
+
+	on StartSimulationLoop {
+		this.decisions.clear
+
+		for (body : this.gridEnvironment.allBodies) {
+			var perceivedObjects = this.gridEnvironment.computePerceptions(body.id)
+	
+			var perceptionEvent = new Perception
+			perceptionEvent.perceivedObjects = perceivedObjects
+			perceptionEvent.agentBody = body
+
+			emit(perceptionEvent) [it.ID == body.id]
+		}
+	}
+	
+}
